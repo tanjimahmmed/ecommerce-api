@@ -4,7 +4,8 @@ require('express-async-errors')
 const express = require('express');
 const app = express();
 
-
+// rest of packages
+const morgan = require('morgan');
 
 // database connection
 const connectDB = require('./db/connect')
@@ -13,13 +14,14 @@ const connectDB = require('./db/connect')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler')
 
+app.use(morgan('tiny'))
 app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send('api')
 })
 
-app.use(notFoundMiddleware)
+app.use(notFoundMiddleware) 
 app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 3000;
